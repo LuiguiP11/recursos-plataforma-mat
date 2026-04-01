@@ -237,9 +237,19 @@ body{background:#000;overflow:hidden;font-family:'Nunito',sans-serif;color:white
   <!-- NAME INPUT -->
   <div class="name-input-wrap">
     <div class="name-label">¿Cómo te llamas, explorador?</div>
-    <input class="name-input" id="player-name" type="text" maxlength="20"
-      placeholder="Escribe tu nombre..." autocomplete="off" spellcheck="false"/>
-    <div class="name-error" id="name-error">⚠ Ingresa tu nombre para continuar</div>
+    <div style="display:flex; gap:10px; width:100%;">
+      <input class="name-input" id="player-name" type="text" maxlength="20"
+        placeholder="Escribe tu nombre..." autocomplete="off" spellcheck="false" style="flex:1;"/>
+      <button id="btn-qr-scan" style="background:#FFA500; border:none; border-radius:10px; width:50px; cursor:pointer; font-size:20px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(255,165,0,0.3);">📷</button>
+    </div>
+    <div class="name-error" id="name-error">⚠ Ingresa tu nombre o escanea tu QR</div>
+  </div>
+
+  <!-- QR SCANNER MODAL -->
+  <div id="qr-modal" class="hidden" style="position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:1000; display:none; flex-direction:column; align-items:center; justify-content:center; padding:20px;">
+    <div id="qr-reader" style="width:100%; max-width:400px; border:4px solid #FFA500; border-radius:15px; overflow:hidden; background:#1a1a1a;"></div>
+    <p style="margin-top:20px; color:#94a3b8; font-family:'Nunito',sans-serif; text-align:center;">Apunta tu <strong>QR JHIROS</strong> a la cámara</p>
+    <button id="btn-qr-close" class="btn-sec" style="margin-top:20px; border-color:#FFA500; color:#FFA500;">Cerrar Cámara</button>
   </div>
 
   <!-- CHARACTER GENDER SELECTION -->
@@ -381,12 +391,91 @@ const LEVELS = [
 // ── STATE ──────────────────────────────────────────
 let selectedChar = 'male';
 let playerName   = '';
+let playerUser   = ''; // Usuario de Firebase
+let playerGrade  = ''; // Grado del alumno
 let startLevel   = 0;
 let currentLevel = 0;
 let unlockedLevels = 1;
 let retriesLeft    = 3;  // 3 intentos totales (se comparten entre todos los niveles)
 let levelsCompleted = 0; // niveles completados en esta sesión
 let G = {};
+
+// ── QR SCANNER LOGIC ──────────────────────────────
+let html5QrCode = null;
+
+async function startScanner() {
+  document.getElementById('qr-modal').style.display = 'flex';
+  html5QrCode = new Html5Qrcode("qr-reader");
+  const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+  
+  try {
+    await html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
+  } catch (err) {
+    console.error("No se pudo iniciar la cámara", err);
+    alert("No se pudo acceder a la cámara. Por favor, asegúrate de dar los permisos necesarios.");
+    closeScanner();
+  }
+}
+
+async function onScanSuccess(decodedText) {
+  // decodedText debería ser el usuario (ej: luis.ponce)
+  closeScanner();
+  document.getElementById('player-name').value = "Buscando...";
+  
+  try {
+    const q = window.fs.query(
+      window.fs.collection(window.db, "alumnos"),
+      window.fs.where("usuario", "==", decodedText.trim().toLowerCase())
+    );
+    const snap = await window.fs.getDocs(q);
+    
+    if (!snap.empty) {
+      const data = snap.docs[0].data();
+      playerName = (data.primerNombre || data.nombre) + " " + (data.primerApellido || data.apellido);
+      playerUser = data.usuario;
+      playerGrade = data.grado;
+      document.getElementById('player-name').value = playerName;
+      document.getElementById('name-error').style.display = 'none';
+      console.log("Alumno detectado:", playerName);
+    } else {
+      alert("No se encontró ningún alumno con ese código QR.");
+      document.getElementById('player-name').value = "";
+    }
+  } catch (err) {
+    console.error("Error buscando alumno:", err);
+    alert("Error de conexión al buscar el alumno.");
+    document.getElementById('player-name').value = "";
+  }
+}
+
+function closeScanner() {
+  if (html5QrCode) {
+    html5QrCode.stop().then(() => {
+      document.getElementById('qr-modal').style.display = 'none';
+    }).catch(err => console.error("Error al detener el escáner", err));
+  } else {
+    document.getElementById('qr-modal').style.display = 'none';
+  }
+}
+
+// ── RECORD SCORE TO FIREBASE ─────────────────────
+async function saveScoreToFirebase() {
+  if (!playerUser) return; // Si no hay usuario registrado (entró manual), no guarda en DB
+
+  try {
+    await window.fs.addDoc(window.fs.collection(window.db, "notas"), {
+      usuario: playerUser,
+      actividad: "JHIROS Adventure 3D: " + LEVELS[currentLevel].name,
+      punteo: 1, // 1 punto por nivel completado
+      fecha: new Date().toLocaleDateString('es-GT'),
+      timestamp: window.fs.serverTimestamp(),
+      grado: playerGrade
+    });
+    console.log("Punto de zona guardado para:", playerUser);
+  } catch (err) {
+    console.error("Error guardando punteo:", err);
+  }
+}
 
 function resetG(){
   G = {
@@ -1906,6 +1995,10 @@ setTimeout(()=>{
   drawPreview2D('prev-male',   'male');
   drawPreview2D('prev-female', 'female');
 },120);
+
+// QR Buttons
+document.getElementById('btn-qr-scan').onclick = startScanner;
+document.getElementById('btn-qr-close').onclick = closeScanner;
 
 // Add btns-row-over div to screen-over
 document.getElementById('screen-over').querySelector('.btns-row').id='btns-row-over';
