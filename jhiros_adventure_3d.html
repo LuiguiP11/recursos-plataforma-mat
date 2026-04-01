@@ -2026,82 +2026,89 @@ function openCertificate(){
 }
 
 // ── INIT ────────────────────────────────────────
-resizeRenderer();
+window.addEventListener('load', () => {
+  console.log("JHIROS 3D: Sistema listo.");
+  resizeRenderer();
 
-// Load unlocked levels from localStorage
-unlockedLevels = parseInt(localStorage.getItem('jhiros3d_unlocked') || '1');
-startLevel = 0; // always start from level 1 selection default
+  // Load unlocked levels from localStorage
+  unlockedLevels = parseInt(localStorage.getItem('jhiros3d_unlocked') || '1');
+  startLevel = 0; // always start from level 1 selection default
 
-buildLevelCards();
-setTimeout(()=>{
-  drawPreview2D('prev-male',   'male');
-  drawPreview2D('prev-female', 'female');
-},120);
+  buildLevelCards();
+  setTimeout(()=>{
+    drawPreview2D('prev-male',   'male');
+    drawPreview2D('prev-female', 'female');
+  },120);
 
-// QR Buttons
-document.getElementById('btn-qr-scan').onclick = startScanner;
-document.getElementById('btn-qr-close').onclick = closeScanner;
-
-document.getElementById('btn-start').onclick = async () => {
-  const nameInput = document.getElementById('player-name');
-  const nameVal = nameInput.value.trim();
-  const nameError = document.getElementById('name-error');
+  // QR Buttons - Blindaje de conexión
+  const scanBtn = document.getElementById('btn-qr-scan');
+  const closeBtn = document.getElementById('btn-qr-close');
   
-  if(!nameVal){
-    nameError.style.display='block';
-    nameInput.focus();
-    return;
-  }
-  
-  nameError.style.display='none';
-  const btn = document.getElementById('btn-start');
-  const originalText = btn.textContent;
-  btn.textContent = "VERIFICANDO...";
-  btn.disabled = true;
+  if (scanBtn) scanBtn.onclick = startScanner;
+  if (closeBtn) closeBtn.onclick = closeScanner;
 
-  // Si no se usó el QR, intentamos buscar si lo que escribió es un usuario válido
-  if (!playerUser) {
-    try {
-      const q = window.fs.query(
-        window.fs.collection(window.db, "alumnos"),
-        window.fs.where("usuario", "==", nameVal.toLowerCase())
-      );
-      const snap = await window.fs.getDocs(q);
-      
-      if (!snap.empty) {
-        const data = snap.docs[0].data();
-        playerName = (data.primerNombre || data.nombre) + " " + (data.primerApellido || data.apellido);
-        playerUser = data.usuario;
-        playerGrade = data.grado;
-        console.log("Usuario vinculado manualmente:", playerUser);
-      } else {
-        playerName = nameVal;
-        playerUser = ''; // Se queda vacío, no guardará puntos
-        console.warn("Iniciando sin vinculación a base de datos.");
-        if (!confirm("⚠️ No detectamos un Usuario JHIROS válido. Podrás jugar, pero TUS PUNTOS NO SE GUARDARÁN en la plataforma. ¿Deseas continuar?")) {
-          btn.textContent = originalText;
-          btn.disabled = false;
-          return;
-        }
-      }
-    } catch (e) {
-      console.error("Error en verificación:", e);
-      playerName = nameVal;
+  // Add btns-row-over div to screen-over
+  const overRow = document.getElementById('screen-over').querySelector('.btns-row');
+  if(overRow) overRow.id='btns-row-over';
+
+  document.getElementById('btn-start').onclick = async () => {
+    const nameInput = document.getElementById('player-name');
+    const nameVal = nameInput.value.trim();
+    const nameError = document.getElementById('name-error');
+    
+    if(!nameVal){
+      nameError.style.display='block';
+      nameInput.focus();
+      return;
     }
-  } else {
-    // Si ya teníamos playerUser (por QR), nos aseguramos de que playerName sea el correcto
-    // (en caso de que el usuario haya editado el input después de escanear)
-  }
-  
-  btn.textContent = originalText;
-  btn.disabled = false;
-  
-  retriesLeft = 3;      
-  levelsCompleted = 0;
-  document.getElementById('hud-name').textContent = playerName;
-  currentLevel = startLevel;
-  startNewLevel();
-};
+    
+    nameError.style.display='none';
+    const btn = document.getElementById('btn-start');
+    const originalText = btn.textContent;
+    btn.textContent = "VERIFICANDO...";
+    btn.disabled = true;
+
+    // Si no se usó el QR, intentamos buscar si lo que escribió es un usuario válido
+    if (!playerUser) {
+      try {
+        const q = window.fs.query(
+          window.fs.collection(window.db, "alumnos"),
+          window.fs.where("usuario", "==", nameVal.toLowerCase())
+        );
+        const snap = await window.fs.getDocs(q);
+        
+        if (!snap.empty) {
+          const data = snap.docs[0].data();
+          playerName = (data.primerNombre || data.nombre) + " " + (data.primerApellido || data.apellido);
+          playerUser = data.usuario;
+          playerGrade = data.grado;
+          console.log("Usuario vinculado manualmente:", playerUser);
+        } else {
+          playerName = nameVal;
+          playerUser = ''; // Se queda vacío, no guardará puntos
+          console.warn("Iniciando sin vinculación a base de datos.");
+          if (!confirm("⚠️ No detectamos un Usuario JHIROS válido. Podrás jugar, pero TUS PUNTOS NO SE GUARDARÁN en la plataforma. ¿Deseas continuar?")) {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            return;
+          }
+        }
+      } catch (e) {
+        console.error("Error en verificación:", e);
+        playerName = nameVal;
+      }
+    }
+    
+    btn.textContent = originalText;
+    btn.disabled = false;
+    
+    retriesLeft = 3;      
+    levelsCompleted = 0;
+    document.getElementById('hud-name').textContent = playerName;
+    currentLevel = startLevel;
+    startNewLevel();
+  };
+});
 
 document.getElementById('btn-download-cert').onclick=()=>{
   const cv = document.getElementById('cert-canvas');
