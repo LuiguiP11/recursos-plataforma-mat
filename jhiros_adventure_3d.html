@@ -405,22 +405,25 @@ let G = {};
 let html5QrCode = null;
 
 async function startScanner() {
-  document.getElementById('qr-modal').style.display = 'flex';
-  document.getElementById('qr-status').textContent = "🔄 Iniciando cámara...";
+  const modal = document.getElementById('qr-modal');
+  const status = document.getElementById('qr-status');
+  
+  modal.style.display = 'flex';
+  modal.classList.remove('hidden');
+  status.textContent = "🔄 Iniciando cámara...";
+  status.style.color = "#FFA500";
   
   if (!html5QrCode) {
     html5QrCode = new Html5Qrcode("qr-reader");
   }
   
-  // Configuración de alto rendimiento
   const config = { 
-    fps: 20, // Más rápido
-    qrbox: (viewfinderWidth, vHeight) => {
-        const minEdge = Math.min(viewfinderWidth, vHeight);
-        const qrboxSize = Math.floor(minEdge * 0.7);
-        return { width: qrboxSize, height: qrboxSize };
-    },
-    aspectRatio: 1.0
+    fps: 30, // Máximo rendimiento
+    qrbox: { width: 250, height: 250 }, // Tamaño estándar e infalible
+    aspectRatio: 1.0,
+    experimentalFeatures: {
+      useBarCodeDetectorIfSupported: true
+    }
   };
   
   try {
@@ -428,15 +431,24 @@ async function startScanner() {
       { facingMode: "environment" }, 
       config, 
       (text) => {
-        document.getElementById('qr-status').textContent = "✅ ¡Detectado!";
-        document.getElementById('qr-status').style.color = "#39ff14";
+        status.textContent = "✅ ¡DETECTADO!";
+        status.style.color = "#39ff14";
+        if(navigator.vibrate) navigator.vibrate(100);
         onScanSuccess(text);
       }
     );
-    document.getElementById('qr-status').textContent = "🔍 Escaneando QR...";
+    status.textContent = "🔍 BUSCANDO QR...";
+    
+    // Aviso de ayuda después de unos segundos
+    setTimeout(() => {
+      if (modal.style.display === 'flex' && status.textContent.includes("BUSCANDO")) {
+        status.textContent = "💡 ACERCA EL QR O BUSCA MÁS LUZ";
+      }
+    }, 5000);
+
   } catch (err) {
     console.error("No se pudo iniciar la cámara", err);
-    alert("No se pudo acceder a la cámara. Por favor, asegúrate de:\n1. Estar en una página segura (HTTPS).\n2. Dar permisos de cámara al navegador.");
+    alert("Error de cámara. Asegúrate de:\n1. Usar HTTPS (GitHub Pages).\n2. Dar permisos de cámara.");
     closeScanner();
   }
 }
