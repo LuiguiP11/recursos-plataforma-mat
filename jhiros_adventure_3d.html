@@ -2042,9 +2042,6 @@ setTimeout(()=>{
 document.getElementById('btn-qr-scan').onclick = startScanner;
 document.getElementById('btn-qr-close').onclick = closeScanner;
 
-// Add btns-row-over div to screen-over
-document.getElementById('screen-over').querySelector('.btns-row').id='btns-row-over';
-
 document.getElementById('btn-start').onclick = async () => {
   const nameInput = document.getElementById('player-name');
   const nameVal = nameInput.value.trim();
