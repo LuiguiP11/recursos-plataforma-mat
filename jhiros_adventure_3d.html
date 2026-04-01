@@ -460,21 +460,40 @@ function closeScanner() {
 
 // ── RECORD SCORE TO FIREBASE ─────────────────────
 async function saveScoreToFirebase() {
-  if (!playerUser) return; // Si no hay usuario registrado (entró manual), no guarda en DB
+  if (!playerUser) {
+    console.warn("No hay usuario vinculado. No se puede guardar el punteo.");
+    return;
+  }
 
   try {
-    await window.fs.addDoc(window.fs.collection(window.db, "notas"), {
-      usuario: playerUser,
+    const notaData = {
+      usuario: playerUser.trim().toLowerCase(),
       actividad: "JHIROS Adventure 3D: " + LEVELS[currentLevel].name,
       punteo: 1, // 1 punto por nivel completado
       fecha: new Date().toLocaleDateString('es-GT'),
       timestamp: window.fs.serverTimestamp(),
-      grado: playerGrade
-    });
-    console.log("Punto de zona guardado para:", playerUser);
+      grado: playerGrade || "No especificado"
+    };
+
+    console.log("Intentando guardar punto para:", playerUser, notaData);
+    
+    await window.fs.addDoc(window.fs.collection(window.db, "notas"), notaData);
+    
+    console.log("✅ ¡Punto de zona guardado exitosamente en Firebase!");
+    // Mostrar un pequeño aviso visual para que el alumno sepa que su esfuerzo valió la pena
+    showSaveToast("¡Punto guardado en plataforma! ✨");
   } catch (err) {
-    console.error("Error guardando punteo:", err);
+    console.error("❌ Error CRÍTICO al guardar punteo:", err);
+    alert("¡Uy! Hubo un problema al guardar tus puntos en la nube. Por favor, toma una captura de pantalla de tu victoria.");
   }
+}
+
+function showSaveToast(msg) {
+  const toast = document.createElement('div');
+  toast.style = "position:fixed; top:70px; left:50%; transform:translateX(-50%); background:rgba(57,255,20,0.9); color:#000; padding:10px 25px; border-radius:30px; font-weight:900; z-index:10000; box-shadow:0 0 20px rgba(57,255,20,0.4); font-family:sans-serif; font-size:14px;";
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
 }
 
 function resetG(){
@@ -2003,29 +2022,64 @@ document.getElementById('btn-qr-close').onclick = closeScanner;
 // Add btns-row-over div to screen-over
 document.getElementById('screen-over').querySelector('.btns-row').id='btns-row-over';
 
-document.getElementById('btn-start').onclick=()=>{
+document.getElementById('btn-start').onclick = async () => {
   const nameInput = document.getElementById('player-name');
   const nameVal = nameInput.value.trim();
   const nameError = document.getElementById('name-error');
+  
   if(!nameVal){
     nameError.style.display='block';
     nameInput.focus();
     return;
   }
+  
   nameError.style.display='none';
-  playerName = nameVal;
-  // Si entró manual y no por QR, limpiamos el usuario de Firebase
-  if (playerName !== nameVal || !playerUser) {
-     // Si el nombre en el input es diferente al que detectó el QR, o no hay usuario de Firebase
-     // Pero si el nombre coincide con lo que el QR detectó, lo dejamos.
-     // Si el usuario simplemente escribió su nombre:
-     if (!playerUser) playerUser = ''; 
+  const btn = document.getElementById('btn-start');
+  const originalText = btn.textContent;
+  btn.textContent = "VERIFICANDO...";
+  btn.disabled = true;
+
+  // Si no se usó el QR, intentamos buscar si lo que escribió es un usuario válido
+  if (!playerUser) {
+    try {
+      const q = window.fs.query(
+        window.fs.collection(window.db, "alumnos"),
+        window.fs.where("usuario", "==", nameVal.toLowerCase())
+      );
+      const snap = await window.fs.getDocs(q);
+      
+      if (!snap.empty) {
+        const data = snap.docs[0].data();
+        playerName = (data.primerNombre || data.nombre) + " " + (data.primerApellido || data.apellido);
+        playerUser = data.usuario;
+        playerGrade = data.grado;
+        console.log("Usuario vinculado manualmente:", playerUser);
+      } else {
+        playerName = nameVal;
+        playerUser = ''; // Se queda vacío, no guardará puntos
+        console.warn("Iniciando sin vinculación a base de datos.");
+        if (!confirm("⚠️ No detectamos un Usuario JHIROS válido. Podrás jugar, pero TUS PUNTOS NO SE GUARDARÁN en la plataforma. ¿Deseas continuar?")) {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          return;
+        }
+      }
+    } catch (e) {
+      console.error("Error en verificación:", e);
+      playerName = nameVal;
+    }
+  } else {
+    // Si ya teníamos playerUser (por QR), nos aseguramos de que playerName sea el correcto
+    // (en caso de que el usuario haya editado el input después de escanear)
   }
   
-  retriesLeft = 3;      // reset to 3 attempts on new game
+  btn.textContent = originalText;
+  btn.disabled = false;
+  
+  retriesLeft = 3;      
   levelsCompleted = 0;
   document.getElementById('hud-name').textContent = playerName;
-  currentLevel=startLevel;
+  currentLevel = startLevel;
   startNewLevel();
 };
 
