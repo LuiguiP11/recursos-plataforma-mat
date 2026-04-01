@@ -246,10 +246,11 @@ body{background:#000;overflow:hidden;font-family:'Nunito',sans-serif;color:white
   </div>
 
   <!-- QR SCANNER MODAL -->
-  <div id="qr-modal" class="hidden" style="position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:1000; display:none; flex-direction:column; align-items:center; justify-content:center; padding:20px;">
-    <div id="qr-reader" style="width:100%; max-width:400px; border:4px solid #FFA500; border-radius:15px; overflow:hidden; background:#1a1a1a;"></div>
-    <p style="margin-top:20px; color:#94a3b8; font-family:'Nunito',sans-serif; text-align:center;">Apunta tu <strong>QR JHIROS</strong> a la cámara</p>
-    <button id="btn-qr-close" class="btn-sec" style="margin-top:20px; border-color:#FFA500; color:#FFA500;">Cerrar Cámara</button>
+  <div id="qr-modal" class="hidden" style="position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:1000; display:none; flex-direction:column; align-items:center; justify-content:center; padding:20px;">
+    <div id="qr-reader" style="width:100%; max-width:400px; min-height:300px; border:4px solid #FFA500; border-radius:15px; overflow:hidden; background:#000;"></div>
+    <div id="qr-status" style="margin-top:15px; color:#FFA500; font-family:'Nunito',sans-serif; font-weight:800; font-size:14px; text-transform:uppercase; letter-spacing:1px;">🔍 Escaneando...</div>
+    <p style="margin-top:10px; color:#94a3b8; font-family:'Nunito',sans-serif; text-align:center; max-width:300px;">Apunta tu <strong>QR JHIROS</strong> al centro del cuadro</p>
+    <button id="btn-qr-close" class="btn-sec" style="margin-top:30px; border-color:#FFA500; color:#FFA500; padding:12px 30px;">Cancelar Escaneo</button>
   </div>
 
   <!-- CHARACTER GENDER SELECTION -->
