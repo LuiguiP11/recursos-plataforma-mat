@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JHIROS EDU | Presentación Élite Maestría</title>
+    <title>JHIROS EDU | Presentación Definitiva Maestría</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,12 +15,12 @@
     
     <style>
         :root {
-            --navy:    #0f172a;
+            --navy:    #020617;
             --accent:  #FFA500;   /* Naranja JHIROS */
             --neon-blue: #00BFFF; /* Azul Eléctrico */
             --neon-pink: #FF69B4; /* Rosa Neón */
             --jhiros-green: #32CD32;
-            --glass:   rgba(30, 41, 59, 0.9);
+            --glass:   rgba(15, 23, 42, 0.92);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
@@ -35,109 +35,61 @@
             width: 100vw;
         }
 
-        #particles-js {
-            position: fixed;
-            width: 100%; height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-        }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); }
 
         #pencil-cursor {
-            position: fixed; width: 35px; height: 35px;
-            pointer-events: none; z-index: 999999;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            filter: drop-shadow(0 0 10px var(--accent));
-            display: flex; align-items: center; justify-content: center;
-            font-size: 28px; color: var(--accent);
+            position: fixed; width: 35px; height: 35px; pointer-events: none; z-index: 999999;
+            transform: translate(-50%, -50%) rotate(-45deg); filter: drop-shadow(0 0 10px var(--accent));
+            display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--accent);
         }
 
         .sparkle {
-            position: fixed; width: 5px; height: 5px;
-            background: var(--accent); border-radius: 50%;
-            pointer-events: none; z-index: 999998;
-            box-shadow: 0 0 10px var(--accent);
-            animation: sparkFade 0.8s forwards;
+            position: fixed; width: 4px; height: 4px; background: var(--accent); border-radius: 50%;
+            pointer-events: none; z-index: 999998; box-shadow: 0 0 8px var(--accent); animation: sparkFade 0.8s forwards;
         }
 
-        @keyframes sparkFade {
-            0% { transform: scale(1) translateY(0); opacity: 1; }
-            100% { transform: scale(0) translateY(30px); opacity: 0; }
-        }
+        @keyframes sparkFade { 0% { transform: scale(1) translateY(0); opacity: 1; } 100% { transform: scale(0) translateY(20px); opacity: 0; } }
 
-        /* ── SISTEMA DE SLIDES ── */
-        .slider-wrapper {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-        }
+        .slider-wrapper { position: relative; width: 100vw; height: 100vh; }
 
         .slide {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
             display: flex; align-items: center; justify-content: center;
-            padding: 40px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.6s ease;
-            z-index: 1;
+            padding: 40px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 1;
         }
 
-        .slide.active {
-            opacity: 1;
-            pointer-events: all;
-            z-index: 10;
-        }
+        .slide.active { opacity: 1; pointer-events: all; z-index: 10; }
 
         .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 40px;
-            padding: 45px;
-            width: 100%;
-            max-width: 1100px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-            border-bottom: 5px solid var(--accent);
+            background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--glass-border);
+            border-radius: 40px; padding: 50px; width: 100%; max-width: 1200px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8); position: relative; overflow: hidden; border-bottom: 5px solid var(--accent);
         }
 
-        .chapter-num {
-            position: absolute; top: 15px; right: 35px;
-            font-family: 'Space Mono', monospace;
-            font-size: 5rem; font-weight: 900;
-            color: rgba(255, 255, 255, 0.05);
+        .chapter-badge {
+            position: absolute; top: 30px; right: 40px; font-family: 'Space Mono', monospace;
+            font-size: 1rem; background: var(--accent); color: var(--navy); padding: 5px 15px; border-radius: 10px; font-weight: 900;
         }
 
-        .slide-header {
-            margin-bottom: 25px; border-left: 6px solid var(--accent); padding-left: 20px;
+        .chapter-bg-num {
+            position: absolute; top: 10px; right: 30px; font-size: 8rem; font-weight: 900; color: rgba(255, 255, 255, 0.03); z-index: -1;
         }
 
-        .slide-header h2 { font-size: 2.2rem; text-transform: uppercase; color: white; }
-        .slide-header p { color: var(--neon-blue); font-family: 'Space Mono', monospace; margin-top: 5px; }
+        .slide-header { margin-bottom: 30px; border-left: 6px solid var(--neon-blue); padding-left: 20px; }
+        .slide-header h2 { font-size: 2.5rem; text-transform: uppercase; color: white; letter-spacing: -1px; }
+        .slide-header p { color: var(--accent); font-family: 'Space Mono', monospace; margin-top: 5px; font-weight: 700; letter-spacing: 2px; }
 
-        /* ── GRIDS ── */
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
 
         .item-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px; padding: 25px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: center;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 25px; padding: 25px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center;
             cursor: pointer !important;
         }
-        .item-card:hover { 
-            background: rgba(255, 165, 0, 0.1); 
-            border-color: var(--accent); 
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(255,165,0,0.2);
-        }
-        .item-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 10px; filter: drop-shadow(0 0 10px var(--accent)); }
-        .item-card h4 { color: white; margin-bottom: 8px; font-weight: 800; text-transform: uppercase; font-size: 1.1rem; }
-        .item-card p { font-size: 0.9rem; color: #94a3b8; line-height: 1.4; }
+        .item-card:hover { background: rgba(255, 165, 0, 0.1); border-color: var(--accent); transform: translateY(-10px); box-shadow: 0 15px 30px rgba(255,165,0,0.2); }
+        .item-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--accent)); }
+        .item-card h4 { color: white; margin-bottom: 8px; font-weight: 800; font-size: 1.1rem; }
+        .item-card p { font-size: 0.9rem; color: #94a3b8; }
 
         .btn-action {
             display: inline-block; padding: 8px 20px; border-radius: 50px;
@@ -148,55 +100,35 @@
         /* ── MODALES ── */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 100000;
-            display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.97); z-index: 100000;
+            display: none; align-items: center; justify-content: center; backdrop-filter: blur(20px);
         }
         .modal-content {
-            width: 90%; height: 85%; background: var(--navy);
-            border-radius: 35px; border: 2px solid var(--accent);
-            position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 40px;
+            width: 94%; height: 90%; background: #020617; border-radius: 40px; border: 2px solid var(--accent);
+            position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px;
         }
-        .close-modal {
-            position: absolute; top: 20px; right: 30px;
-            color: white; font-size: 40px; z-index: 100001;
-            cursor: pointer !important;
-        }
-        iframe { width: 100%; height: 100%; border: none; border-radius: 15px; }
-        .modal-image { max-width: 100%; max-height: 100%; border-radius: 15px; }
+        .close-modal { position: absolute; top: 25px; right: 40px; color: white; font-size: 45px; z-index: 100001; cursor: pointer !important; }
+        iframe { width: 100%; height: 100%; border: none; border-radius: 20px; background: white; }
+        .modal-image { max-width: 100%; max-height: 100%; border-radius: 20px; border: 4px solid var(--accent); }
 
-        .modal-text-content {
-            color: #cbd5e1; font-size: 1.2rem; line-height: 1.8; text-align: left; width: 100%;
-        }
-        .modal-text-content h3 { color: var(--accent); margin-bottom: 20px; font-size: 2rem; border-bottom: 2px solid var(--neon-blue); display: inline-block; }
-        .modal-text-content ul { list-style: none; margin-top: 20px; }
-        .modal-text-content li { margin-bottom: 15px; padding-left: 30px; position: relative; }
-        .modal-text-content li::before { content: '\f105'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--neon-pink); }
+        .modal-text-content { color: #f1f5f9; font-size: 1.3rem; line-height: 1.8; text-align: left; width: 100%; max-width: 900px; }
+        .modal-text-content h3 { color: var(--accent); margin-bottom: 25px; font-size: 2.2rem; border-bottom: 3px solid var(--neon-blue); display: inline-block; }
+        .modal-text-content ul { list-style: none; }
+        .modal-text-content li { margin-bottom: 20px; padding-left: 40px; position: relative; }
+        .modal-text-content li::before { content: '\f054'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--neon-pink); font-size: 1rem; top: 5px; }
 
-        /* ── CONTROLES UI ── */
-        .nav-controls {
-            position: fixed; bottom: 30px; right: 40px;
-            display: flex; gap: 15px; z-index: 1000;
-        }
+        /* ── CONTROLES ── */
+        .nav-controls { position: fixed; bottom: 40px; right: 50px; display: flex; gap: 20px; z-index: 1000; }
         .nav-btn {
-            background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);
-            color: white; width: 55px; height: 55px; border-radius: 50%;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            color: white; width: 65px; height: 65px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 20px; transition: all 0.3s;
+            font-size: 24px; transition: all 0.3s;
         }
-        .nav-btn:hover { background: var(--accent); box-shadow: 0 0 20px var(--accent); }
+        .nav-btn:hover { background: var(--accent); box-shadow: 0 0 30px var(--accent); transform: scale(1.1); }
 
-        .progress-bar {
-            position: fixed; top: 0; left: 0; height: 6px;
-            background: linear-gradient(90deg, var(--accent), var(--neon-blue));
-            z-index: 1001; transition: width 0.3s;
-        }
-        .indicator {
-            position: fixed; bottom: 30px; left: 40px;
-            font-family: 'Space Mono', monospace; color: #64748b; font-weight: 700;
-        }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 8px; background: linear-gradient(90deg, var(--accent), var(--neon-blue), var(--neon-pink)); z-index: 1001; transition: width 0.4s; }
+        .indicator { position: fixed; bottom: 40px; left: 50px; font-family: 'Space Mono', monospace; color: #64748b; font-weight: 800; font-size: 1.2rem; }
 
     </style>
 </head>
@@ -207,7 +139,6 @@
     <div class="progress-bar" id="progress"></div>
     <div class="indicator" id="indicator">1 / 9</div>
 
-    <!-- MODAL -->
     <div class="modal-overlay" id="modal">
         <span class="close-modal" onclick="closeModal()">&times;</span>
         <div class="modal-content" id="modal-container"></div>
@@ -218,170 +149,125 @@
         <!-- SLIDE 0: PORTADA -->
         <section class="slide active" id="slide-0">
             <div class="glass-card animate__animated animate__zoomIn" style="text-align: center;">
-                <img src="https://raw.githubusercontent.com/LuiguiP11/recursos-plataforma-mat/main/images/Jhiros_New_SFBN.png" alt="Logo" style="width: 140px; margin-bottom: 20px;">
-                <h1 style="font-size: 4rem; font-weight: 900; background: linear-gradient(90deg, var(--accent), var(--neon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">JHIROS EDU</h1>
-                <p style="font-family: 'Space Mono', monospace; font-size: 1.4rem; color: white; letter-spacing: 10px;">EL CÓDIGO DE LA VERDAD</p>
-                <div style="margin-top: 40px; color: #94a3b8; font-weight: 700;">
-                    LUIS YGNACIO PONCE SIERRA <br> PROYECTO FINAL MAESTRÍA MEJA 2026
-                </div>
+                <img src="https://raw.githubusercontent.com/LuiguiP11/recursos-plataforma-mat/main/images/Jhiros_New_SFBN.png" alt="Logo" style="width: 150px; margin-bottom: 30px;">
+                <h1 style="font-size: 5rem; font-weight: 900; background: linear-gradient(90deg, var(--accent), var(--neon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px rgba(255,165,0,0.3));">JHIROS EDU</h1>
+                <p style="font-family: 'Space Mono', monospace; font-size: 1.8rem; color: white; letter-spacing: 15px; margin-top: 10px;">EL CÓDIGO DE LA VERDAD</p>
+                <div style="margin-top: 50px; color: #94a3b8; font-weight: 800; font-size: 1.3rem;">PROYECTO FINAL MAESTRÍA MEJA 2026 <br> LUIS YGNACIO PONCE SIERRA</div>
             </div>
         </section>
 
-        <!-- SLIDE 1: INTRODUCCIÓN -->
+        <!-- CAP 01: DIAGNÓSTICO -->
         <section class="slide" id="slide-1">
             <div class="glass-card">
-                <div class="chapter-num">CAP 01</div>
-                <div class="slide-header">
-                    <h2>Introducción</h2>
-                    <p>CONTEXTO Y JUSTIFICACIÓN</p>
-                </div>
-                <div style="font-size: 1.2rem; color: #cbd5e1;">
-                    <p>Propuesta disruptiva para transformar la ansiedad académica en empoderamiento tecnológico.</p>
-                    <div style="background: rgba(255, 165, 0, 0.1); border: 1px solid var(--accent); padding: 20px; border-radius: 15px; margin-top: 20px; text-align: center;">
-                        <strong>Misión:</strong> Humanizar la tecnología para conquistar el Álgebra.
-                    </div>
+                <div class="chapter-badge">CAPÍTULO I</div>
+                <div class="chapter-bg-num">01</div>
+                <div class="slide-header"><h2>Diagnóstico Situacional</h2><p>LA PARADOJA DE LA CONEXIÓN</p></div>
+                <div class="content-grid">
+                    <div class="item-card" style="border-color: var(--neon-blue);"><i class="fas fa-satellite-dish"></i><h4>Entorno Carchá</h4><p>80% alumnos SIN dispositivo propio.<br>60% Población Bilingüe Q’eqchi’.</p></div>
+                    <div class="item-card" style="border-color: var(--jhiros-green);"><i class="fas fa-home-user"></i><h4>Estrategia Hogar</h4><p>100% padres CON conectividad.<br>El smartphone familiar como aula.</p></div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 2: DIAGNÓSTICO -->
+        <!-- CAP 02: MARCO TEÓRICO -->
         <section class="slide" id="slide-2">
             <div class="glass-card">
-                <div class="chapter-num">CAP 02</div>
-                <div class="slide-header">
-                    <h2>Diagnóstico</h2>
-                    <p>LA PARADOJA DE LA CONEXIÓN</p>
-                </div>
-                <div class="grid-2">
-                    <div class="item-card" style="border-color: var(--neon-blue);">
-                        <i class="fas fa-mobile-alt"></i>
-                        <h4>La Realidad</h4>
-                        <p>80% alumnos SIN dispositivo propio.<br>60% Población Bilingüe Q’eqchi’.</p>
-                    </div>
-                    <div class="item-card" style="border-color: var(--jhiros-green);">
-                        <i class="fas fa-wifi"></i>
-                        <h4>El Potencial</h4>
-                        <p>100% de padres CON conectividad.<br>El hogar como aula asincrónica.</p>
-                    </div>
+                <div class="chapter-badge">CAPÍTULO II</div>
+                <div class="chapter-bg-num">02</div>
+                <div class="slide-header"><h2>Fundamentación</h2><p>BASES CIENTÍFICAS JHIROS</p></div>
+                <div class="grid-3">
+                    <div class="item-card"><i class="fas fa-brain"></i><h4>Gagné</h4><p>Procesamiento cognitivo en 9 fases.</p></div>
+                    <div class="item-card" style="border-color: var(--neon-pink);"><i class="fas fa-gamepad"></i><h4>Gamificación</h4><p>Engagement y motivación intrínseca.</p></div>
+                    <div class="item-card" style="border-color: var(--neon-blue);"><i class="fas fa-layer-group"></i><h4>Transmedia</h4><p>Doble codificación visual y auditiva.</p></div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 3: MARCO TEÓRICO -->
+        <!-- CAP 03: OBJETIVOS -->
         <section class="slide" id="slide-3">
             <div class="glass-card">
-                <div class="chapter-num">CAP 03</div>
-                <div class="slide-header">
-                    <h2>Marco Teórico</h2>
-                    <p>FUNDAMENTACIÓN CIENTÍFICA</p>
-                </div>
-                <div class="grid-3">
-                    <div class="item-card"><i class="fas fa-brain"></i><h4>Gagné</h4><p>Procesamiento cognitivo.</p></div>
-                    <div class="item-card"><i class="fas fa-gamepad"></i><h4>Gamificación</h4><p>Teoría Autodeterminación.</p></div>
-                    <div class="item-card"><i class="fas fa-layer-group"></i><h4>Transmedia</h4><p>Andamiaje Paivio.</p></div>
+                <div class="chapter-badge">CAPÍTULO III</div>
+                <div class="chapter-bg-num">03</div>
+                <div class="slide-header"><h2>Objetivos Élite</h2><p>ALINEACIÓN AL CNB GUATEMALA</p></div>
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 40px; border-radius: 30px; border-left: 12px solid var(--accent);">
+                    <h3 style="color: white; margin-bottom: 15px; font-size: 1.8rem;">REVOLUCIÓN ALGEBRAICA</h3>
+                    <p style="font-size: 1.3rem; color: #cbd5e1; line-height: 1.6;">Diseñar un ecosistema digital que transforme la enseñanza de ecuaciones mediante narrativas visuales y analítica de datos en tiempo real.</p>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 4: OBJETIVOS -->
+        <!-- CAP 04: DESARROLLO TÉCNICO -->
         <section class="slide" id="slide-4">
             <div class="glass-card">
-                <div class="chapter-num">CAP 04</div>
-                <div class="slide-header">
-                    <h2>Objetivos</h2>
-                    <p>ALINEACIÓN AL CNB GUATEMALA</p>
-                </div>
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 30px; border-radius: 25px; border-left: 10px solid var(--accent);">
-                    <h3 style="color: white; margin-bottom: 10px;">MAESTRÍA ALGEBRAICA</h3>
-                    <p style="font-size: 1.1rem; color: #94a3b8;">Resolver problemas económicos utilizando lenguaje algebraico en un ecosistema digital inmersivo.</p>
+                <div class="chapter-badge">CAPÍTULO IV</div>
+                <div class="chapter-bg-num">04</div>
+                <div class="slide-header"><h2>Arsenal JHIROS</h2><p>HERRAMIENTAS DISEÑADAS POR EL DOCENTE</p></div>
+                <div class="grid-3">
+                    <div class="item-card" onclick="openManga()"><i class="fas fa-book-open"></i><h4>Manga Shonen</h4><div class="btn-action">VISOR PDF</div></div>
+                    <div class="item-card" style="border-color: var(--neon-pink);" onclick="openPodcast()"><i class="fas fa-microphone-lines" style="color: var(--neon-pink);"></i><h4>Podcast EDU</h4><div class="btn-action" style="background: var(--neon-pink);">REPRODUCIR</div></div>
+                    <div class="item-card" style="border-color: var(--jhiros-green);" onclick="openAPK()"><i class="fas fa-mobile-screen" style="color: var(--jhiros-green);"></i><h4>Master App V6</h4><div class="btn-action" style="background: var(--jhiros-green);">EVIDENCIA</div></div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 5: ARSENAL -->
+        <!-- CAP 05: RUTA PEDAGÓGICA -->
         <section class="slide" id="slide-5">
             <div class="glass-card">
-                <div class="chapter-num">CAP 05</div>
-                <div class="slide-header">
-                    <h2>Arsenal Pedagógico</h2>
-                    <p>RECURSOS DISEÑADOS POR EL DOCENTE</p>
-                </div>
+                <div class="chapter-badge">CAPÍTULO V</div>
+                <div class="chapter-bg-num">05</div>
+                <div class="slide-header"><h2>Momentos Gagné</h2><p>COREOGRAFÍA DEL APRENDIZAJE (CLIC DETALLE)</p></div>
                 <div class="grid-3">
-                    <div class="item-card" onclick="openManga()">
-                        <i class="fas fa-book-open"></i><h4>Manga</h4>
-                        <div class="btn-action">VER VISOR</div>
-                    </div>
-                    <div class="item-card" style="border-color: var(--neon-pink);" onclick="openPodcast()">
-                        <i class="fas fa-microphone-lines" style="color: var(--neon-pink);"></i><h4>Podcast</h4>
-                        <div class="btn-action" style="background: var(--neon-pink);">REPRODUCIR</div>
-                    </div>
-                    <div class="item-card" style="border-color: var(--jhiros-green);" onclick="openAPK()">
-                        <i class="fas fa-mobile-screen-button" style="color: var(--jhiros-green);"></i><h4>App V6</h4>
-                        <div class="btn-action" style="background: var(--jhiros-green);">EVIDENCIA</div>
-                    </div>
+                    <div class="item-card" onclick="openGagne(1)"><i class="fas fa-rocket"></i><h4>APERTURA</h4><p>M1 - M3</p><div class="btn-action">VER FASE</div></div>
+                    <div class="item-card" onclick="openGagne(2)"><i class="fas fa-microchip"></i><h4>PROCESO</h4><p>M4 - M5</p><div class="btn-action">VER FASE</div></div>
+                    <div class="item-card" style="border-color: var(--neon-blue);" onclick="openGagne(3)"><i class="fas fa-trophy"></i><h4>CIERRE</h4><p>M6 - M9</p><div class="btn-action" style="background: var(--neon-blue);">VER FASE</div></div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 6: RUTA DE APRENDIZAJE (INTERACTIVA) -->
+        <!-- CAP 06: VINCULACIÓN SOCIAL -->
         <section class="slide" id="slide-6">
             <div class="glass-card">
-                <div class="chapter-num">CAP 06</div>
-                <div class="slide-header">
-                    <h2>Ruta Pedagógica</h2>
-                    <p>9 MOMENTOS GAGNÉ EN ACCIÓN (CLIC PARA DETALLE)</p>
-                </div>
-                <div class="grid-3">
-                    <div class="item-card" onclick="openGagne(1)">
-                        <i class="fas fa-star"></i>
-                        <h4>M1 - M3</h4>
-                        <p>Atención, Objetivos y Recuerdo.</p>
-                        <div class="btn-action">DETALLE</div>
-                    </div>
-                    <div class="item-card" onclick="openGagne(2)">
-                        <i class="fas fa-compass"></i>
-                        <h4>M4 - M5</h4>
-                        <p>Estímulo y Guía del Aprendizaje.</p>
-                        <div class="btn-action">DETALLE</div>
-                    </div>
-                    <div class="item-card" style="border-color: var(--neon-blue);" onclick="openGagne(3)">
-                        <i class="fas fa-bolt"></i>
-                        <h4>M6 - M9</h4>
-                        <p>Desempeño, Feedback y Retención.</p>
-                        <div class="btn-action" style="background: var(--neon-blue);">DETALLE</div>
-                    </div>
+                <div class="chapter-badge">CAPÍTULO VI</div>
+                <div class="chapter-bg-num">06</div>
+                <div class="slide-header"><h2>Impacto Familiar</h2><p>EL ORÁCULO DE LOS PADRES</p></div>
+                <div style="text-align:center;">
+                    <i class="fas fa-users-rectangle" style="font-size: 6rem; color: var(--accent); margin-bottom: 25px; filter: drop-shadow(0 0 15px var(--accent));"></i>
+                    <p style="color: white; font-size: 1.6rem; font-weight: 700;">Vinculación afectiva mediante el **Parent Dashboard**.</p>
+                    <p style="color: #94a3b8; margin-top: 15px; font-size: 1.1rem;">Supervisión en tiempo real que empodera al hogar.</p>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 7: VINCULACIÓN -->
+        <!-- CAP 07: EVALUACIÓN -->
         <section class="slide" id="slide-7">
             <div class="glass-card">
-                <div class="chapter-num">CAP 07</div>
-                <div class="slide-header">
-                    <h2>Vinculación Social</h2>
-                    <p>DASHBOARD PARA PADRES</p>
-                </div>
-                <div style="text-align:center;">
-                    <i class="fas fa-users-viewfinder" style="font-size: 4rem; color: var(--accent); margin-bottom: 15px;"></i>
-                    <p style="color: white; font-size: 1.3rem;">El smartphone familiar como puente de acompañamiento afectivo.</p>
+                <div class="chapter-badge">CAPÍTULO VII</div>
+                <div class="chapter-bg-num">07</div>
+                <div class="slide-header"><h2>Evaluación & Mejora</h2><p>BIG DATA AL SERVICIO DEL DOCENTE</p></div>
+                <div class="grid-2">
+                    <div class="item-card" style="border-left: 8px solid var(--neon-blue); text-align: left;">
+                        <h4>Análisis Predictivo</h4>
+                        <p>Detección temprana de nudos de aprendizaje mediante analítica de Firebase.</p>
+                    </div>
+                    <div class="item-card" style="border-left: 8px solid var(--jhiros-green); text-align: left;">
+                        <h4>Feedback 3D</h4>
+                        <p>Pruebas objetivas inmersivas que transforman el error en aprendizaje.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 8: CONCLUSIONES -->
+        <!-- CAP 08: CONCLUSIONES -->
         <section class="slide" id="slide-8">
             <div class="glass-card">
-                <div class="chapter-num">CAP 08</div>
-                <div class="slide-header">
-                    <h2>Conclusiones</h2>
-                    <p>AL INFINITO... Y MÁS ALLÁ</p>
-                </div>
+                <div class="chapter-badge">CAPÍTULO VIII</div>
+                <div class="chapter-bg-num">08</div>
+                <div class="slide-header"><h2>Conclusiones</h2><p>LA VISIÓN JHIROS 2026</p></div>
                 <div class="grid-2">
-                    <div class="item-card"><h4>Andamiaje Visual</h4><p>Reducción de carga cognitiva.</p></div>
-                    <div class="item-card"><h4>Autonomía</h4><p>Ecosistema móvil disruptivo.</p></div>
+                    <div class="item-card" style="background: rgba(0, 191, 255, 0.05);"><h4>Andamiaje Visual</h4><p>Reducción de carga cognitiva en contextos bilingües.</p></div>
+                    <div class="item-card" style="background: rgba(255, 105, 180, 0.05);"><h4>Autonomía Móvil</h4><p>Empoderamiento estudiantil mediante validación QR.</p></div>
                 </div>
-                <h2 style="text-align:center; margin-top:25px; color: var(--accent);">JHIROS 2026</h2>
+                <h2 style="text-align:center; margin-top:40px; color: var(--accent); letter-spacing: 8px; font-weight: 900;">AL INFINITO... Y MÁS ALLÁ</h2>
             </div>
         </section>
 
@@ -392,23 +278,24 @@
         <button class="nav-btn" onclick="next()"><i class="fas fa-chevron-right"></i></button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" onload="initParticles()" onerror="console.log('Particles disabled')"></script>
+    
     <script>
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 80 },
-                "color": { "value": "#FFA500" },
-                "opacity": { "value": 0.2 },
-                "size": { "value": 3 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#00BFFF", "opacity": 0.2 },
-                "move": { "enable": true, "speed": 2 }
+        function initParticles() {
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS("particles-js", {
+                    "particles": {
+                        "number": { "value": 80 }, "color": { "value": "#FFA500" }, "opacity": { "value": 0.25 },
+                        "size": { "value": 3 }, "line_linked": { "enable": true, "distance": 150, "color": "#00BFFF", "opacity": 0.2, "width": 1 },
+                        "move": { "enable": true, "speed": 2 }
+                    }
+                });
             }
-        });
+        }
 
         const pencil = document.getElementById('pencil-cursor');
         window.addEventListener('mousemove', (e) => {
-            pencil.style.left = `${e.clientX}px`;
-            pencil.style.top = `${e.clientY}px`;
+            pencil.style.left = `${e.clientX}px`; pencil.style.top = `${e.clientY}px`;
             if (Math.random() > 0.7) createSpark(e.clientX, e.clientY);
         });
         function createSpark(x, y) {
@@ -446,61 +333,24 @@
         const modal = document.getElementById('modal');
         const modalContainer = document.getElementById('modal-container');
 
-        function openManga() {
-            modal.style.display = 'flex';
-            modalContainer.innerHTML = `<iframe src="https://luiguip11.github.io/recursos-plataforma-mat/recursos/1ERO/TRIMESTRE1/comics/Tomo1_El_Despertar_de_los_Signos.pdf"></iframe>`;
-        }
-        function openPodcast() {
-            modal.style.display = 'flex';
-            modalContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/3Z35oNyOUL4?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-        }
-        function openAPK() {
-            modal.style.display = 'flex';
-            modalContainer.innerHTML = `<img src="https://raw.githubusercontent.com/LuiguiP11/recursos-plataforma-mat/main/Extras/APK.jpeg" class="modal-image" alt="App JHIROS">`;
-        }
+        function openManga() { modal.style.display = 'flex'; modalContainer.innerHTML = `<iframe src="https://luiguip11.github.io/recursos-plataforma-mat/recursos/1ERO/TRIMESTRE1/comics/Tomo1_El_Despertar_de_los_Signos.pdf"></iframe>`; }
+        function openPodcast() { modal.style.display = 'flex'; modalContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/3Z35oNyOUL4?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; }
+        function openAPK() { modal.style.display = 'flex'; modalContainer.innerHTML = `<img src="https://raw.githubusercontent.com/LuiguiP11/recursos-plataforma-mat/main/Extras/APK.jpeg" class="modal-image" alt="App JHIROS">`; }
 
         function openGagne(group) {
             modal.style.display = 'flex';
             let content = '';
             if (group === 1) {
-                content = `
-                <div class="modal-text-content">
-                    <h3>FASE 1: APERTURA Y MEMORIA</h3>
-                    <ul>
-                        <li><strong>M1. Ganar la atención:</strong> Estética Shonen para romper el sesgo negativo hacia las matemáticas.</li>
-                        <li><strong>M2. Informar objetivos:</strong> El alumno asume el rol de "Arquitecto Algebraico" con misiones claras.</li>
-                        <li><strong>M3. Estimular el recuerdo:</strong> "Duelo de Clanes" para recuperar conceptos de aritmética básica.</li>
-                    </ul>
-                </div>`;
+                content = `<div class="modal-text-content"><h3>FASE 1: APERTURA</h3><ul><li><strong>M1. Ganar la atención:</strong> Estética Shonen para romper el sesgo negativo.</li><li><strong>M2. Informar objetivos:</strong> El rol del "Arquitecto Algebraico".</li><li><strong>M3. Estimular el recuerdo:</strong> "Duelo de Clanes" de aritmética básica.</li></ul></div>`;
             } else if (group === 2) {
-                content = `
-                <div class="modal-text-content">
-                    <h3>FASE 2: PROCESAMIENTO Y GUÍA</h3>
-                    <ul>
-                        <li><strong>M4. Presentar el material:</strong> Podcast JHIROS y micro-cápsulas de teoría asincrónica.</li>
-                        <li><strong>M5. Proporcionar guía:</strong> Plataforma interactiva con andamiaje visual (Scaffolding) y pistas en tiempo real.</li>
-                    </ul>
-                </div>`;
+                content = `<div class="modal-text-content"><h3>FASE 2: PROCESAMIENTO</h3><ul><li><strong>M4. Presentar el material:</strong> Podcast JHIROS y micro-teoría asincrónica.</li><li><strong>M5. Proporcionar guía:</strong> Andamiaje visual (Scaffolding) y pistas interactivas.</li></ul></div>`;
             } else if (group === 3) {
-                content = `
-                <div class="modal-text-content">
-                    <h3>FASE 3: ACCIÓN Y CIERRE</h3>
-                    <ul>
-                        <li><strong>M6. Provocar el desempeño:</strong> Resolución de retos reales validados por App V6 mediante códigos QR.</li>
-                        <li><strong>M7. Proporcionar feedback:</strong> Alertas neón inmediatas y actualización automática del Dashboard de Padres.</li>
-                        <li><strong>M8. Evaluar el desempeño:</strong> Prueba objetiva gamificada en un entorno inmersivo 3D.</li>
-                        <li><strong>M9. Retención y transferencia:</strong> Certificación digital y acceso permanente al ecosistema JHIROS.</li>
-                    </ul>
-                </div>`;
+                content = `<div class="modal-text-content"><h3>FASE 3: ACCIÓN Y CIERRE</h3><ul><li><strong>M6. Provocar desempeño:</strong> Retos validados por App V6 y QR.</li><li><strong>M7. Proporcionar feedback:</strong> Alertas neón y actualización del Dashboard.</li><li><strong>M8. Evaluar desempeño:</strong> Prueba objetiva en motor 3D.</li><li><strong>M9. Retención:</strong> Certificación digital y acceso permanente.</li></ul></div>`;
             }
             modalContainer.innerHTML = content;
         }
 
-        function closeModal() {
-            modal.style.display = 'none';
-            modalContainer.innerHTML = '';
-        }
-
+        function closeModal() { modal.style.display = 'none'; modalContainer.innerHTML = ''; }
         updateSlides();
     </script>
 </body>
